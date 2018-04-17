@@ -1,0 +1,43 @@
+Def_Driver  'pa130_8' 
+dD=10cm  |Piston 
+fs=83.4Hz  Mms=6.8g  Qms=3.21 
+dD1=1cm  tD1=3.5cm 
+Qes=0.6 Re=7.1ohm  Le=0.71mH  ExpoLe=0.618 
+ 
+System 'S0_BR_QL7_BB4' 
+ 
+Driver 'D1' Def='pa130_8' Node=0=1=2=21
+Enclosure    'E1'  Node=2
+  Vb=4.78092L  Qb/fo=1 Lb=0.303302m Sb=0.0519444m2
+fb=83.4Hz  dD=3.33333cm 
+ 
+ Radiator  'Rad1'  Def='D1' Node=21 
+x=0  y=0  z=0cm  HAngle=0  VAngle=0 
+  HEdge=0.303302m WEdge=0.171263m
+ 
+ 
+ System 'S1_BR_QL7_QB3' 
+ 
+Driver 'D1' Def='pa130_8' Node=0=1=2=21
+Enclosure    'E1'  Node=2
+  Vb=15.7811L  Qb/fo=1 Lb=0.436028m Sb=0.110289m2
+fb=68.7216Hz  dD=3.33333cm 
+ 
+ Radiator  'Rad1'  Def='D1' Node=21 
+x=0  y=0  z=0cm  HAngle=0  VAngle=0 
+  HEdge=0.436028m WEdge=0.252941m
+ 
+ 
+ System 'S2_BR_QL7_C4' 
+ 
+Driver 'D1' Def='pa130_8' Node=0=1=2=21
+Enclosure    'E1'  Node=2
+  Vb=9.09091L  Qb/fo=1 Lb=0.368108m Sb=0.0777236m2
+fb=65.6358Hz  dD=3.33333cm 
+ 
+ Radiator  'Rad1'  Def='D1' Node=21 
+x=0  y=0  z=0cm  HAngle=0  VAngle=0 
+  HEdge=0.368108m WEdge=0.211143m
+ 
+ 
+ 
