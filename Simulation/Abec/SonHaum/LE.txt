@@ -1,0 +1,41 @@
+//*****************************************************************************
+//
+// ABEC2 Lumped Element File
+// Project: SP38
+//
+//*****************************************************************************
+
+// Thiele-Small parameter of electro-dynamic driver
+// Note, no diaphragm dimensions to be specified in this script.
+
+Def_Driver 'SP38'// 3FE25
+  Re=6.41ohm 
+  Le=2.32mH    ExpoRe=0.824  ExpoLe=0.756
+  Mms=36.1g  // air-load subtracted
+  Cms=0.77mm/N   Bl=9.5N/A
+  fs=30.3Hz  Qms=3.06  Qes=0.49
+
+// Driving value of LE network (here using formula to convert dB to voltage)
+
+Def_Driving "Driving"
+  Value={0.707}  // -15dBV + 20dB amplifier
+  IsRms
+
+// Lumped element network 
+  
+System 'S1'
+
+  // Generator resistance of wires etc
+  Resistor 'Rg' R=0.1ohm
+    Node=1=2
+  // Speaker electro-acoustic
+  Driver  'Drv1'  Def='SP38'
+    Node=2=0=10=20   DrvGroup=1001,1002  // Link to BE
+  // Coupling to BE with the help of radiation impedance
+  RadImp 'Front'                         // Radiation impedance of external domain
+    Node=10     DrvGroup=1001            // Link to BE
+  RadImp 'Rear'                          // Radiation impedance of enclosure
+    Node=20     DrvGroup=1002            // Link to BE
+
+
+

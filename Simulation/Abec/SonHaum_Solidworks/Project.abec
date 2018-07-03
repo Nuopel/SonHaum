@@ -1,0 +1,16 @@
+ 
+; ABEC Project File
+ 
+[Project]
+Scriptname_InfoFile=
+[Solving]
+Scriptname_Solving=solving - Copie.txt
+[DirectSound]
+Scriptname_DirectSound=
+[LEScript]
+Scriptname_LEScript=LE.txt
+[Observation]
+C0=field.txt
+C1=spec.txt
+[MeshFiles]
+C0="woofer_solidw1 (2).msh",Alias1

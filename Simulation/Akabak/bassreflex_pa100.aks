@@ -1,5 +1,5 @@
 Def_Driver  'pa100' 
-dD=90cm  |Piston 
+dD=9cm  |Piston 
 fs=100Hz  Mms=3.93g  Qms=3.84 
 dD1=3cm  tD1=3cm 
 Qes=0.7 Re=5.5ohm  Le=0.14mH  ExpoLe=0.618 
@@ -9,7 +9,7 @@ System 'S0_BR_QL7_BB4'
 Driver 'D1' Def='pa100' Node=0=1=2=21
 Enclosure    'E1'  Node=2
   Vb=4.18466L  Qb/fo=1 Lb=0.291534m Sb=0.0478176m2
-fb=100Hz  dD=30cm 
+fb=100Hz  dD=5cm 
  
  Radiator  'Rad1'  Def='D1' Node=21 
 x=0  y=0  z=0cm  HAngle=0  VAngle=0 
@@ -21,7 +21,7 @@ x=0  y=0  z=0cm  HAngle=0  VAngle=0
 Driver 'D1' Def='pa100' Node=0=1=2=21
 Enclosure    'E1'  Node=2
   Vb=227.027L  Qb/fo=1 Lb=1.01623m Sb=0.619884m2
-fb=76.77Hz  dD=30cm 
+fb=76.77Hz  dD=5cm 
  
  Radiator  'Rad1'  Def='D1' Node=21 
 x=0  y=0  z=0cm  HAngle=0  VAngle=0 
@@ -33,7 +33,7 @@ x=0  y=0  z=0cm  HAngle=0  VAngle=0
 Driver 'D1' Def='pa100' Node=0=1=2=21
 Enclosure    'E1'  Node=2
   Vb=8.79581L  Qb/fo=1 Lb=0.364429m Sb=0.0761216m2
-fb=68.96Hz  dD=30cm 
+fb=68.96Hz  dD=5cm 
  
  Radiator  'Rad1'  Def='D1' Node=21 
 x=0  y=0  z=0cm  HAngle=0  VAngle=0 

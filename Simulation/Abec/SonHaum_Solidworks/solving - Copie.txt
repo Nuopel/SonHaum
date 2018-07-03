@@ -1,0 +1,103 @@
+//*****************************************************************************
+//
+// ABEC3 data file
+// Project: 45 Tower BEM = Exterior, LEM = Interior
+//
+//*****************************************************************************
+
+
+Control_Solver
+  f1=10;  f2=1400Hz;  NumFrequencies=20;  Abscissa=log
+  MeshFrequency=700Hz
+  Dim=3D; 
+  sym=x
+  
+Subdomain_Properties "Interior"
+ Subdomain=1
+ ElType=Interior
+  color='blue'
+  
+  Subdomain_Properties "Vent"
+ Subdomain=2
+ ElType=Interior
+  color='blue'
+
+Subdomain_Properties "Exterior"
+ Subdomain=3
+ ElType=Exterior
+
+ 
+
+MeshFile_Properties
+  MeshFileAlias=Alias1
+  Scale=1mm
+
+
+Elements "box_ext"
+  SubDomain=3
+  MeshFileAlias=Alias1
+  105 Mesh  Include  1 48 49 22 27 54 7 41 53 36 40 35
+
+Elements "box_int"
+  SubDomain=1
+  MeshFileAlias=Alias1
+  106 Mesh  Include 29 21 39 2 52 5 //70 60 64
+
+ off Elements "vent"
+  SubDomain=2
+  MeshFileAlias=Alias1
+  107 Mesh  Include all// 46
+
+
+  
+// Inner boundary of vent
+off Duct "Vent-Inner"
+DuctType=Circle
+Position= MeshFileAlias=Alias1 Include 12 rot=22.5,00,00
+  SubDomain=2
+  Dd=60mm
+ Len=18.5036cm
+  
+  // Interface between vent and cabinet
+off Transition "I-Vent-Inner"
+  Subdomain=1,2
+  RefElement="Vent-Inner"
+  RefEdge=2
+
+// Interface between outside and vent
+off Transition "I-Vent-Outer"
+  Subdomain=2,3
+  RefElement="Vent-Inner"
+  RefEdge=1  
+  
+off WallImpedance "Enclosure Damping"
+  RefElements="box_int"
+  ImpType=Damping
+  Value=0.05
+  
+ 
+
+//_________________________________________________
+// ____________speaker part_______________________
+//_________________________________________________
+
+
+Diaphragm  "Cone front"
+    DrvGroup=1001
+	Position= MeshFileAlias=Alias1 Include 17 rot=67,00,00// Position by mesh-file plane #23
+    Side=Front 
+    HasBaffle=false
+    dD=-200mm;  hD1=-54mm;                // Driving group link to observation stage
+    SubDomain=3                 // Front side belongs to sub-domain 3
+    
+
+
+Diaphragm  "Cone rear"
+  Side=Rear                    // This is the rear side of the diaphragm
+  DrvGroup=1002                // Driving group link to observation stage
+  SubDomain=1                  // This side belongs to sub-domain SubDomain=1
+  RefDiaph="Cone front"        // Inherite from "Cone front"
+Position= MeshFileAlias=Alias1 Include 17 rot=67,00,00 offset=-30mm// Position by mesh-file plane #23
+
+  HasBaffle=false//true
+  

@@ -1,0 +1,184 @@
+22:42 28/09/2015//*****************************************************************************
+//
+// ABEC3 Solving File
+// Project: SP38
+//
+//*****************************************************************************
+
+ 
+Control_Solver
+ f1=20;  f2=2000;  NumFrequencies=100;  Abscissa=log;
+  ImpedanceNumFrequencies=50
+  Dim=3D 
+//Sym=x
+  MeshFrequency=1300Hz
+
+
+
+ 
+SubDomain_Properties 'Enclosure'
+  SubDomain=1
+  ElType=Interior           
+  Color='Green'
+
+SubDomain_Properties 'Vent'
+  SubDomain=2
+  ElType=Interior           
+  Color='blue'
+
+
+SubDomain_Properties 'Exterior'
+  SubDomain=3
+  ElType=Exterior            // Radiation to infinity
+   
+  
+
+
+Formula "taille"
+{
+
+H=57.9;// Hauteur
+L=31.8;// Longueur
+P=24.7	;// Profondeur
+d=1.5;//
+}
+//_________________________________________________
+// ____________Nodes definition_______________________
+//_________________________________________________
+
+Nodes   "NF"
+ //--------- Interior--------------------
+//-----------------------------------------
+//hexagone gauche
+ Scale=0.01m
+
+//hexagone droite
+1 {-L} {0} {0}
+2 {-L} {H} {0}
+3 {0} {H} {0}
+4 {0} {0} {0}
+5 {0} {0} {P}
+6 {-L} {0} {P}
+7 {-L} {H} {P}
+8 {0} {H} {P}
+
+
+ //---------Exterior--------------------
+//-----------------------------------------
+//hexagone gauche
+201 {-L-d} {-d} {-d}
+202 {-L-d} {H+d} {-d}
+203 {+d} {H+d} {-d}
+204 {+d} {-d} {-d}
+205 {+d} {-d} {P+d}
+206 {-L-d} {-d} {P+d}
+207 {-L-d} {H+d} {P+d}
+208 {+d} {H+d} {P+d}
+
+
+
+//_________________________________________________
+// ____________Enceinte part_______________________
+//_________________________________________________
+
+Elements "Enclosure-int"
+ RefNodes="NF"
+ SubDomain=1
+//1001 1 2 3 4
+1002 1 2 7 6
+1003 5 6 7 8
+1004 2 3 8 7
+1006 3 4 5 8
+Elements "Enclosure-int2"
+ RefNodes="NF"
+ SubDomain=1
+ SwapNormals=true
+1005 1 4 5 6
+
+  Infinite_Baffle  "IB Front"
+    Subdomain=3
+    Position=y
+
+
+
+Elements "Enclosure-exterior"
+  RefNodes="NF"
+  SubDomain=3
+SwapNormals=true
+2002 201 202 207 206
+2003 205 206 207 208
+2004 202 203 208 207
+2006 203 204 205 208
+Elements "Enclosure-exterior2"
+  RefNodes="NF"
+  SubDomain=3
+2005 201 204 205 206
+
+//_________________________________________________
+// ____________vented part_______________________
+//_________________________________________________
+// Inner boundary of vent
+ Duct "Vent-Inner"
+DuctType=Circle
+  SubDomain=2
+  Dd=60mm
+ Len=15cm
+
+// Interface between vent and cabinet
+ Transition "I-Vent-Inner"
+  Subdomain=2,1
+  RefElement="Vent-Inner"
+  RefEdge=2
+
+// Interface between outside and vent
+ Transition "I-Vent-Outer"
+  Subdomain=3,2
+  RefElement="Vent-Inner"
+  RefEdge=1
+  
+ 
+ //_________________________________________________
+// ____________baffle+ position of elements_______________________
+//_________________________________________________
+ // Front of cabinet, which belongs to exterior boundaries.
+Baffle "Exterior"
+  Subdomain=3
+  Vertices=201,202,203,204  "NF"
+  102  Ref="Vent-Inner"   xc=-180mm  yc=0mm
+  105  Ref="Cone front"   xc=70mm  yc=0mm
+  
+Baffle "interior"
+  Subdomain=1
+ SwapNormals=true
+  Vertices=1,2,3,4  "NF"
+  103  Ref="Vent-Inner"   xc=-180mm yc=0mm
+  106  Ref="Cone rear"   xc=70mm  yc=0mm
+
+
+
+//_________________________________________________
+// ____________speaker part_______________________
+//_________________________________________________
+
+
+Diaphragm  "Cone front"
+    DrvGroup=1001       // Driving group link to observation stage
+  SubDomain=3      // Front side belongs to sub-domain 2      
+  NoBaffle
+  Simple=true         // Simple model
+  Side=Front          // Creates elements for the front side of the diaphragm
+  dD=200mm            // Diameter of cone
+  tD1=54mm            // Inner depth of cone to base of dust cap
+  dD1=60mm           // Diameter of dust cap
+  hD1=30mm            // Height of dust cap         
+    
+
+Diaphragm  "Cone rear"
+ Side=Rear                    // This is the rear side of the diaphragm
+  DrvGroup=1002                // Driving group link to observation stage
+  SubDomain=1                  // This side belongs to sub-domain SubDomain=1
+  RefDiaph="Cone front"        // Inherite from "Cone front"
+  HasBaffle=false//true
+
+
+ 

@@ -1,5 +1,5 @@
 \documentclass[a4paper,english]{report}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 %\usepackage[cyr]{aeguill}
 
@@ -16,13 +16,13 @@
 
 
 \usepackage{xcolor} 
-\usepackage{pdfpages}% add pdf pages
+%\usepackage{pdfpages}% add pdf pages
 \usepackage{multicol}% create simpli column
 \usepackage{float}
 \pagenumbering{arabic} % numerotation des pages
 \pagestyle{empty} %No headings for the first pages.
 
-\usepackage{cite}% bibtex
+%\usepackage{cite}% bibtex
 \usepackage{todonotes}% insert todo
 
 \usepackage{mathtools}
@@ -31,8 +31,8 @@
 \usepackage{hyperref}% hyperlien
 \usepackage{textcomp} % euro symbole
 
-\usepackage{glossaries}
-\makeglossaries
+%\usepackage{glossaries}
+%\makeglossaries
 %%%%% numbering
 \usepackage{etoolbox}
 \tracingpatches
@@ -103,110 +103,76 @@
 					\noindent 
 					
 				Ce pdf a pour but de rapporter les différentes étapes de la conception d'une enceinte, en partant du choix des haut-parleurs et en passant par les différentes simulations, le choix des matériaux, leur usinage, l'assemblage des boites, la mise en place de  la partie électronique et les finitions.\\ \\
-				Le but est de créer une enceinte 3 voies dont les deux voies médium-aiguë seront situés sur une enceinte d'étagère et la troisième sur un caisson au sol pour les basses. La réalisation électrique sera en passif: les filtres seront en aval de l'amplificateur.
+				Le but est de créer une enceinte bluetooth  mono composé de deux haut-parleurs large bande, en s'inspirant du design proposé par la chaine youtube "Les frères Poulains" \href{https://www.youtube.com/watch?v=ollr-PpCMAw}{"Les frères Poulains}. \\
+
 				\end{abstract}
 			
 
 			
 			\chapter{Introduction}
+			Le but est de créer une enceinte bluetooth  mono composé de deux haut-parleurs large-bandes, en s'inspirant du design proposé par la chaine youtube \href{https://www.youtube.com/watch?v=ollr-PpCMAw}{"Les frères Poulains}. \\
+			Au lieu d'utiliser le design complet proposé sur la chaine, qui utilise des haut-parleurs de qualité relativement faible, on propose de refaire les simulations en utilisant les conseils du livre de Dickason "Loudspeaker cookbook" ainsi que le logiciel Akabak et ABEC. Nous allons réaliser une enceinte basse réflex.\\
+			L'intérêt de n'utiliser qu'un seul type de haut parleur, c'est que l'on n'a pas besoin de traitement sur le son avant d'envoyer au HP contrairement à une enceinte bi-voie (ou plus) où l'on doit séparer le contenu fréquentiel avant d'envoyer sur chaque voie. On a par contre pas l'avantage d'avoir réponse en fréquence qui couvre tout le spectre audible (20~Hz-20~kHz). On vise une enceinte 90~100Hz-17~kHz.\\
+			Une fois l'enceinte créé nous avons pour but d'utiliser un raspberry-pi et un DAC audio pour gérer la réception bluetooth. 		
 			
 			\chapter{Bilan matériel}
 			\section{Outils}
 			\begin{itemize}
-				\item Scie circulaire.
-				\item Défonceuse.
-				\item Guide plat (planche plate).
-				\item Serre joints.
-				\item Presses carrés.
-				\item Presses d'angles.
-				\item Perceuse.
-				\item Rouleau à peinture.
+				\item Scie circulaire;
+				\item Défonceuse;
+				\item Guide plat (planche plate);
+				\item Serre joints;
+				\item Presses carrés;
+				\item Presses d'angles;
+				\item Perceuse;
+				\item Rouleau à peinture;
 			\end{itemize}
 			
 			\section{Budget}
-			Pour la partie électronique et haut parleurs, j'ai principalement acheté sur \href{http://loudspeakerfreaks.com/intro.asp}{Loudspeakerfreaks.com}:
+			Les haut parleurs ont été acheté sur \href{http://loudspeakerfreaks.com/intro.asp}{Loudspeakerfreaks.com}:
 			\begin{itemize}
-				\item 2 tweeter Monacor DT-107-8 56.82 \texteuro
-				\item 4 haut parleurs Celestion TF510-8 85.40\texteuro
-				\item divers électronique (capas, bobines, connecteurs) 70\texteuro
-
+				\item 2 haut parleurs \texteuro;
+				\item 1 Raspberry Pi;
+				\item 1 DAC audio;
+				\item 
 			\end{itemize}
 			Pour la partie construction:
 			\begin{itemize}
-				\item Planche de bois massif 18mm 22\texteuro 
-				\item Colle, joint, pied, tampon... 30\texteuro
+				\item Planche de bois massif 18mm;  
+				\item Colle, joint, pied, tampon;
+				\item Mousse acoustique;
 				\item temps passé 0\texteuro.				
 			\end{itemize}
 			
 			\chapter{Réalisation}
 			
 			\section{Choix des Haut-parleurs}
-			Le but étant de créer une enceinte 3 voix, il s'agit de trouver 3 Haut-parleurs différents couvrant le spectre audio de 20Hz-20kHz.\\
-			D'un point de vue design je choisis qu'il y ait deux haut-parleurs medium et un tweeter sur une enceinte pour étagère et un woofer séparer par enceinte.\\
-			Le fait de placer les deux hp medium en série permet de remonter l'impédance totale à 3.2 Ohm qui est faible mais reste supportable pour un amplificateur.\\
-			La sensitivité de deux hp séries est cependant diminué de 3dB. \\
-			En choisissant le Celestion TF510 à 91 dB cela ramène la sensitivité à 89 dB, le tweeter Monacor DT-107 à quand à lui une sensitivité de 90 dB se qui fait un bon appairage.\\
-			Le fait d'avoir deux hp pourrait permettre une tentative de directivité cardioïde, qui diminuerais les réflexions et donc les effets de salle.
+			Sur le site, une large proposition de haut-parleurs (HP) est présente, on cherche un HP entre 20 et 40\texteuro unité, large bande, en 8 $\Omega$, ce qui nous laisse environ une quinzaine de HP.  On préfère se diriger vers des HP de taille moyenne  ~10cm de diamètre, les gros HP ayant une mauvaise directivités et ne pouvant reproduire les hautes fréquences (HF), tandis que les petits ne peuvent produire des basses fréquences (BF).\\
+			En regardant les réponse en fréquence des HP restant on restreint le choix à 4 HP:
+			\begin{itemize}
+				\item N90 8;
+				\item PA100;
+				\item PA130;
+				\item RS100.
+			\end{itemize}
 			
-			\chapter{Simulation}
-			La première étape une fois les hauts parleurs de choisit est de démarrer les simulations. J'utilise Akabak comme premier jet à partir du livre de Vance Dickason, je peux voir ainsi la réponse en fréquence  avec différents volumes et choisir celle qui me convient le plus.\\ 
-			\\
-			Dans un second temps j'utilise Abec3 un logiciel de simulation qui utilise les élément finis pour calculer la réponse de l'enceinte en prenant en compte les réflexions de la structure et sa structure.\\
+			\section{Simulation}
+			\subsection{Simulation basiques: Akabak}
+			La première étape après les hauts parleurs de choisit, est de démarrer les simulations. On utilise Akabak comme premier jet à partir du livre de Vance Dickason. On peux ainsi voir la réponse en fréquence avec différents volumes d'enceintes et tailles d'évents pour les différents HP.\\ 
 			
+				La figure \ref{simubassr} les résultats produit par akabak d'une enceinte bass reflex pour 3 différentes configurations pour les différents HP. Les simulations montrent que la configuration C4 qui a un volume de 8L calculé semble acceptable. L'évent est calculé pour un diamètre de 5cm et une résonance de 70Hz, la longueur correspondante est de 12cm.\\
+				Les résultats peuvent sembler mauvais, cependant la partie à actuellement considéré est la zone basse fréquence qui est relativement bien représenté dans le modèle du logiciel. Le milieu de la courbe présente des résonances possibles (version non définitive) de la boite, elles sont néanmoins amorties dans la réalité par la mousse et l'amortissement naturel de la boite. Pour la partie haute fréquence (>1000 Hz), le modèle utilisé par le logiciel n'est plus suffisant, et ne représente pas la réalité.
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=480px]{./Simulation/Akabak/simuAkabak.pdf}
+				\label{simubassr}
+				\caption{Simulation Akabak Bass reflex}
+			\end{figure}
 
-					
-			\section{Simulation initiale utilisant Akabak} 
-			Étant donnée que je vais construire l'enceinte en deux temps le medium-aigue d'abord je vais créer un bass reflex qui pourra éventuellement se boucher et devenir une enceinte close. Je vais donc réaliser les simulations pour les deux configurations.\\
-			
-			
-			
-			\subsection{Bass reflex}
-			La figure \ref{simubassr} montre un exemple de résultat produit par akabak pour une bass reflex pour 3 différentes configurations. Les simulations ne sont pas très heureuse mais la configuration BB4 qui a un volume de 8L semble acceptable.\\
- 				\begin{figure}[H]
- 					\centering
- 					\includegraphics[width=480px]{./image/bassreflex_tf510.png}
- 					\label{simubassr}
- 					\caption{Simulation Akabak Bassreflex}
- 				\end{figure}
- 			
- 			\subsection{Enceinte close}
- 			La figure \ref{simuclos} montre un exemple de résultat produit par akabak pour une enceinte close.\\ Dans l'optique d'avoir une petite enceinte et au vu des réponses en fréquence, les configurations $Qt_c$ 0.577 et 0.707 soit un volume entre 14-6 L semble acceptable (Le woofer prenant le relais a 300-400 Hz). 
- 				\begin{figure}[H]
- 					\centering
- 					\includegraphics[width=480px]{./image/Clos_tf510.png}
- 					\label{simuclos}
- 					\caption{Simulation akabak enceinte close}
- 				\end{figure}				
-			\section{Circuit électronique}
-			Le filtrage est une partie essentielle des enceintes à plusieurs voies. En effet les différentes voies possèdent un spectre fréquentiel différent qui se superpose. Cette superposition provoque un boost des fréquences concernées, pour éviter cet effet il faut filtrer les voies de façon à ce que la superposition ne provoque pas de boost mais un spectre uniforme quelque soit la fréquence.\\
-			\\
-			Le choix se porte sur un filtre de second ordre comme présenté sur la figure \ref{filter}, bien qu'un filtre d'ordre supérieur aurait été mieux, le coup engendré par les composants passif limite beaucoup.\\
-			Il s'agit d'un filtre passe partout (APC), il y a cependant des précautions à prendre, vu qu'il génère un boost de 2dB dans les basses fréquences et les bobines ont une résistance induisant des pertes. Il est cependant possible d'utiliser un circuit atténuateur pour rééquilibrer les pertes.\\ 
-			\\
-			L'impédance complexe du haut parleur montré sur l'image \ref{Zimp} peut provoquer effets indésirable pour les filtres, il peut donc être utilisé des filtres de compensation d'impédance, montré figure \ref{impcomp},  sur les voies pour diminuer ces effet et obtenir l'effet désiré. La contrainte de prix vient une fois encore limiter le circuit, la compensation de la voie inférieur prenant des valeur de bobine assez cher.\\
-			
- 				\begin{figure}[H]
- 					\centering
- 					\includegraphics[width=300px]{./image/filter.png}
- 					\label{filter}
- 					\caption{Second order filter from  http://www.diyaudioandvideo.com/Calculator/ApcSpeakerCrossover/ }
- 				\end{figure}				
-			
- 				\begin{figure}[H]
- 					\centering
- 					\includegraphics[width=240px]{./image/ZHP.png}
- 					\label{Zimp}
- 					\caption{Impédance d'un haut parleur }
- 				\end{figure}
- 					\begin{figure}[H]
- 						\centering
- 						\includegraphics[width=200px]{./image/Impedance_compensation.png}
- 						\label{impcomp}
- 						\caption{Impedance compensation }
- 					\end{figure}
- 			
+
 			\section{Simulation avec Abec}
-			
+			Dans un second temps, j'utilise Abec3 pour affiner les simulations avec le HP RS100, ce qui permet de calculer la réponse de l'enceinte en prenant en compte les réflexions de la structure et les résonances internes.\\
+			Dans un premier temps, il faut établir la géométrie de l'objet en trois dimensions, le visuel correspondant est donnée dan sla Figure 
 			\chapter{Conception}
 					  
 			 	
